@@ -37,7 +37,11 @@ client.on('messageCreate', async (message) => {
         
         // Send the test message when mentioned
         try {
-            await sendTestMessage('tf you @\'ing me for?');
+            if(Math.random() < 0.5) {
+                await sendTestMessage('Wish denied!');
+            } else {
+                await sendTestMessage('Wish granted!');
+            }
             console.log('Test message sent in response to mention!');
         } catch (error) {
             console.error('Error sending mention response:', error);
