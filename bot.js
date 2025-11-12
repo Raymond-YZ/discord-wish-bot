@@ -1,6 +1,10 @@
 require('dotenv').config();
-const { Client, GatewayIntentBits } = require('discord.js');
+const {
+    Client,
+    GatewayIntentBits
+} = require('discord.js');
 const cron = require('node-cron');
+const { registerPartifulHandler } = require('./create-event');
 
 // Create a new client instance
 const client = new Client({
@@ -26,13 +30,17 @@ client.once('ready', () => {
     console.log('Bot is running and scheduled to send messages at 11:11 PM daily');
 });
 
+// Register /partiful handler
+registerPartifulHandler(client);
+
+
 // Listen for messages and respond to mentions
 client.on('messageCreate', async (message) => {
     // Ignore messages from bots (including this bot)
     if (message.author.bot) return;
     
     // Check if the bot is mentioned in the message
-    if (message.mentions.has(client.user)) {
+    if (message.mentions.has(process.env.BOT_ID)) {
         console.log(`Bot mentioned by ${message.author.tag}: "${message.content}"`);
         
         // Send the test message when mentioned
@@ -40,7 +48,7 @@ client.on('messageCreate', async (message) => {
             if(Math.random() < 0.5) {
                 await sendTestMessage('Wish denied!');
             } else {
-                await sendTestMessage('Wish granted!');
+                await sendTestMessage('Your wish has been granted!');
             }
             console.log('Test message sent in response to mention!');
         } catch (error) {

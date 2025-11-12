@@ -9,7 +9,7 @@ const testClient = new Client({
     ],
 });
 
-async function sendManualMessage(customMessage = 'tf you @\'ing me for?') {
+async function sendManualMessage(customMessage = 'sorry for spam, i sleep now') {
     try {
         console.log('Logging in to Discord...');
         await testClient.login(process.env.DISCORD_BOT_TOKEN);
